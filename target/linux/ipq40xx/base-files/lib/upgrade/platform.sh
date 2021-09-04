@@ -77,6 +77,7 @@ platform_do_upgrade() {
 		nand_do_upgrade "$1"
 		;;
 	alfa-network,ap120c-ac)
+		mkdir -p /var/lock/
 		part="$(awk -F 'ubi.mtd=' '{printf $2}' /proc/cmdline | sed -e 's/ .*$//')"
 		if [ "$part" = "rootfs1" ]; then
 			fw_setenv active 2 || exit 1
@@ -85,6 +86,10 @@ platform_do_upgrade() {
 			fw_setenv active 1 || exit 1
 			CI_UBIPART="rootfs1"
 		fi
+		nand_do_upgrade "$1"
+		;;
+	edgecore,spw2ac1200)
+		CI_UBIPART="$(awk -F 'ubi.mtd=' '{printf $2}' /proc/cmdline | sed -e 's/ .*$//')"
 		nand_do_upgrade "$1"
 		;;
 	asus,map-ac2200)
