@@ -46,6 +46,9 @@ case "$FIRMWARE" in
 		# OEM assigns 4 sequential MACs
 		ath10k_patch_mac $(macaddr_setbit_la $(macaddr_add "$(cat /sys/class/net/eth0/address)" 4))
 		;;
+	tp-link,ec420-g1)
+		caldata_extract "0:ART" 0x9000 0x2f20
+		;;
 	esac
 	;;
 "ath10k/pre-cal-ahb-a000000.wifi.bin")
@@ -158,6 +161,9 @@ case "$FIRMWARE" in
 	zyxel,wre6606)
 		caldata_extract "ART" 0x1000 0x2f20
 		ath10k_patch_mac $(macaddr_add $(cat /sys/class/net/eth0/address) -2)
+		;;
+	tp-link,ec420-g1)
+		caldata_extract "0:ART" 0x1000 0x2f20
 		;;
 	esac
 	;;
