@@ -90,7 +90,8 @@ platform_do_upgrade() {
 		fi
 		nand_do_upgrade "$1"
 		;;
-	edgecore,spw2ac1200)
+	edgecore,spw2ac1200|\
+	edgecore,spw2ac1200-lan-poe)
 		CI_UBIPART="$(awk -F 'ubi.mtd=' '{printf $2}' /proc/cmdline | sed -e 's/ .*$//')"
 		nand_do_upgrade "$1"
 		;;
