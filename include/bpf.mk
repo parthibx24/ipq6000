@@ -58,11 +58,16 @@ BPF_CFLAGS := \
 	-O2 -emit-llvm -Xclang -disable-llvm-passes
 
 define CompileBPF
+	LD_LIBRARY_PATH=$(LD_LIBRARY_PATH):$(STAGING_DIR_HOST)/lib \
 	$(CLANG) -g -target $(BPF_ARCH)-linux-gnu $(BPF_CFLAGS) $(2) \
 		-c $(1) -o $(patsubst %.c,%.bc,$(1))
+	LD_LIBRARY_PATH=$(LD_LIBRARY_PATH):$(STAGING_DIR_HOST)/lib \
 	$(LLVM_OPT) -O2 -mtriple=$(BPF_TARGET) < $(patsubst %.c,%.bc,$(1)) > $(patsubst %.c,%.opt,$(1))
+	LD_LIBRARY_PATH=$(LD_LIBRARY_PATH):$(STAGING_DIR_HOST)/lib \
 	$(LLVM_DIS) < $(patsubst %.c,%.opt,$(1)) > $(patsubst %.c,%.S,$(1))
+	LD_LIBRARY_PATH=$(LD_LIBRARY_PATH):$(STAGING_DIR_HOST)/lib \
 	$(LLVM_LLC) -march=$(BPF_TARGET) -filetype=obj -o $(patsubst %.c,%.o,$(1)) < $(patsubst %.c,%.S,$(1))
+	LD_LIBRARY_PATH=$(LD_LIBRARY_PATH):$(STAGING_DIR_HOST)/lib \
 	$(LLVM_STRIP) --strip-debug $(patsubst %.c,%.o,$(1))
 endef
 
