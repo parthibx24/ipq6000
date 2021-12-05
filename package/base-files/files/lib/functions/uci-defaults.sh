@@ -617,6 +617,16 @@ ucidef_set_hostname() {
 	json_select ..
 }
 
+ucidef_set_wifi_scanning() {
+	local path="$1"
+
+	json_select_object wifi
+		json_select_object $path
+			json_add_boolean scanning 1 
+		json_select ..
+	json_select ..
+}
+
 ucidef_set_ntpserver() {
 	local server
 

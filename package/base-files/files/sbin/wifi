@@ -1,6 +1,8 @@
 #!/bin/sh
 # Copyright (C) 2006 OpenWrt.org
 
+[ -f /etc/board.json ] || exit 0
+
 . /lib/functions.sh
 . /usr/share/libubox/jshn.sh
 
