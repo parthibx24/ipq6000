@@ -46,6 +46,9 @@ ramips_setup_interfaces()
 	xiaomi,mi-router-4a-gigabit)
 		ucidef_set_interfaces_lan_wan "lan1 lan2" "wan"
 		;;
+	cig,wf808)
+		ucidef_set_interface_wan "wan"
+		;;
 	gnubee,gb-pc1|\
 	gnubee,gb-pc2)
 		ucidef_set_interface_lan "lan1 lan2"
@@ -108,6 +111,10 @@ ramips_setup_macs()
 		local index="$(find_mtd_index "board_data")"
 		wan_mac="$(grep -m1 mac= "/dev/mtd${index}" | cut -d= -f2)"
 		lan_mac=$wan_mac
+		;;
+	cig,wf808)
+		wan_mac=$(mtd_get_mac_ascii u-boot-env mac1)
+		label_mac=$wan_mac
 		;;
 	dlink,dir-860l-b1)
 		lan_mac=$(mtd_get_mac_ascii factory lanmac)

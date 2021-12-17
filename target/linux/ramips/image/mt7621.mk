@@ -261,6 +261,16 @@ define Device/buffalo_wsr-600dhp
 endef
 TARGET_DEVICES += buffalo_wsr-600dhp
 
+define Device/cig_wf808
+  $(Device/dsa-migration)
+  DEVICE_VENDOR := CIG
+  DEVICE_MODEL := WF808
+  IMAGE_SIZE := 25000kk
+  DEVICE_PACKAGES := kmod-mt7603 kmod-mt7615e kmod-mt7615-firmware uboot-envtools
+  IMAGE/sysupgrade.bin := sysupgrade-tar | append-metadata
+endef
+TARGET_DEVICES += cig_wf808
+
 define Device/cudy_wr1300
   $(Device/dsa-migration)
   IMAGE_SIZE := 15872k
