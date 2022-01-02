@@ -53,8 +53,7 @@ define KernelPackage/bluetooth
 	$(LINUX_DIR)/net/bluetooth/bnep/bnep.ko \
 	$(LINUX_DIR)/net/bluetooth/hidp/hidp.ko \
 	$(LINUX_DIR)/drivers/bluetooth/hci_uart.ko \
-	$(LINUX_DIR)/drivers/bluetooth/btusb.ko \
-	$(LINUX_DIR)/drivers/bluetooth/btintel.ko
+	$(LINUX_DIR)/drivers/bluetooth/bt*.ko
   AUTOLOAD:=$(call AutoProbe,bluetooth rfcomm bnep hidp hci_uart btusb)
 endef
 
@@ -837,6 +836,7 @@ define KernelPackage/regmap-core
 ifneq ($(wildcard $(LINUX_DIR)/drivers/base/regmap/regmap-core.ko),)
   FILES:=$(LINUX_DIR)/drivers/base/regmap/regmap-core.ko
 endif
+  DEPENDS:=+kmod-lib-lzo
 endef
 
 define KernelPackage/regmap-core/description
