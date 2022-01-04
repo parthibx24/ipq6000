@@ -34,7 +34,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
  	} else if (ret == IEEE80211_AMPDU_TX_START_IMMEDIATE) {
 --- a/net/mac80211/sta_info.h
 +++ b/net/mac80211/sta_info.h
-@@ -190,6 +190,7 @@ struct tid_ampdu_tx {
+@@ -199,6 +199,7 @@ struct tid_ampdu_tx {
  	u8 stop_initiator;
  	bool tx_stop;
  	u16 buf_size;
