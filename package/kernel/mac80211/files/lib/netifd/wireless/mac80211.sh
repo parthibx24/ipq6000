@@ -29,6 +29,7 @@ drv_mac80211_init_device_config() {
 	config_add_string distance
 	config_add_int beacon_int chanbw frag rts
 	config_add_int rxantenna txantenna antenna_gain txpower
+	config_add_int num_global_macaddr
 	config_add_boolean noscan ht_coex acs_exclude_dfs
 	config_add_array ht_capab
 	config_add_array channels
@@ -514,6 +515,7 @@ mac80211_get_addr() {
 
 mac80211_generate_mac() {
 	local phy="$1"
+	local multiple_bssid="$2"
 	local id="${macidx:-0}"
 
 	local ref="$(cat /sys/class/ieee80211/${phy}/macaddress)"
@@ -537,9 +539,16 @@ mac80211_generate_mac() {
 	local mask6=$6
 
 	local oIFS="$IFS"; IFS=":"; set -- $ref; IFS="$oIFS"
-
+	[ "$multiple_bssid" -eq 1 ] && {
+               printf "02:%s:%s:%s:%s:%02x" $b1 $2 $3 $4 $5 $macidx
+               return
+    }
 	macidx=$(($id + 1))
-	[ "$((0x$mask1))" -gt 0 ] && {
+
+	local use_global=0
+	[ "$id" -gt 0 -a "$macidx" -le "$num_global_macaddr" ] && use_global=1
+
+	[ "$((0x$mask1))" -gt 0 -a "$use_global" -lt 1 ] && {
 		b1="0x$1"
 		[ "$id" -gt 0 ] && \
 			b1=$(($b1 ^ ((($id - !($b1 & 2)) << 2)) | 0x2))
@@ -547,7 +556,7 @@ mac80211_generate_mac() {
 		return
 	}
 
-	[ "$((0x$mask6))" -lt 255 ] && {
+	[ "$((0x$mask6))" -lt 255 -a "$use_global" -gt 0 ] && {
 		printf "%s:%s:%s:%s:%s:%02x" $1 $2 $3 $4 $5 $(( 0x$6 ^ $id ))
 		return
 	}
@@ -646,6 +655,7 @@ mac80211_iw_interface_add() {
 }
 
 mac80211_prepare_vif() {
+	local multiple_bssid=$1
 	json_select config
 
 	json_get_vars ifname mode ssid wds powersave macaddr enable wpa_psk_file vlan_file
@@ -659,7 +669,7 @@ mac80211_prepare_vif() {
 	json_select ..
 
 	[ -n "$macaddr" ] || {
-		macaddr="$(mac80211_generate_mac $phy)"
+		macaddr="$(mac80211_generate_mac $phy $multiple_bssid)"
 		macidx="$(($macidx + 1))"
 	}
 
@@ -1028,7 +1038,9 @@ drv_mac80211_setup() {
 		country chanbw distance \
 		txpower antenna_gain \
 		rxantenna txantenna \
-		frag rts beacon_int:100 htmode
+		frag rts beacon_int:100 htmode \
+		multiple_bssid:0 \
+		num_global_macaddr
 	json_get_values basic_rate_list basic_rate
 	json_get_values scan_list scan_list
 	json_select ..
@@ -1090,6 +1102,7 @@ drv_mac80211_setup() {
 	set_default txantenna 0xffffffff
 	set_default distance 0
 	set_default antenna_gain 0
+	set_default num_global_macaddr 1
 
 	[ "$txantenna" = "all" ] && txantenna=0xffffffff
 	[ "$rxantenna" = "all" ] && rxantenna=0xffffffff
@@ -1121,7 +1134,7 @@ drv_mac80211_setup() {
 	mac80211_prepare_iw_htmode
 	for_each_interface "sta adhoc mesh monitor" mac80211_prepare_vif
 	NEWAPLIST=
-	for_each_interface "ap" mac80211_prepare_vif
+	for_each_interface "ap" mac80211_prepare_vif ${multiple_bssid}
 	NEW_MD5=$(test -e "${hostapd_conf_file}" && md5sum ${hostapd_conf_file})
 	OLD_MD5=$(uci -q -P /var/state get wireless._${phy}.md5)
 	if [ "${NEWAPLIST}" != "${OLDAPLIST}" ]; then
