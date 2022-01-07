@@ -90,10 +90,34 @@ define Build/zytrx-header
 	mv $@.new $@
 endef
 
+RELOCATE_LOADADDR = 0x81000000
+
+define Build/fit-relocate
+	$(TOPDIR)/scripts/mkits.sh \
+		-D $(DEVICE_NAME) -o $@.its -k $@ \
+		$(if $(word 2,$(1)),-d $(word 2,$(1))) -C $(word 1,$(1)) \
+		$(if $(word 3,$(1)),-r $(IMAGE_ROOTFS) -f $(subst _,$(comma),$(DEVICE_NAME))) \
+		-a $(RELOCATE_LOADADDR) -e $(RELOCATE_LOADADDR) \
+		$(if $(DEVICE_FDT_NUM),-n $(DEVICE_FDT_NUM)) \
+		-c $(if $(DEVICE_DTS_CONFIG),$(DEVICE_DTS_CONFIG),"config-1") \
+		-A $(LINUX_KARCH) -v $(LINUX_VERSION)
+	PATH=$(LINUX_DIR)/scripts/dtc:$(PATH) mkimage $(if $(word 3,$(1)),-E -B 0x1000 -p 0x1000) -f $@.its $@.new
+	@mv $@.new $@
+endef
+
 define Device/dsa-migration
   DEVICE_COMPAT_VERSION := 1.1
   DEVICE_COMPAT_MESSAGE := Config cannot be migrated from swconfig to DSA
 endef
+
+define Device/actiontec_web7200
+  DEVICE_VENDOR := Actiontec
+  DEVICE_MODEL := EB7200
+  DEVICE_PACKAGES += kmod-mt7603 kmod-mt7915e kmod-usb3 uboot-envtools kmod-i2c-core
+  KERNEL := kernel-bin | relocate-kernel | lzma | fit-relocate lzma $$(KDIR)/image-$$(firstword $$(DEVICE_DTS)).dtb
+  IMAGE_SIZE := 15552k
+endef
+TARGET_DEVICES += actiontec_web7200
 
 define Device/adslr_g7
   $(Device/dsa-migration)
@@ -1379,15 +1403,6 @@ define Device/ubnt_unifi-6-lite
   IMAGE_SIZE := 15424k
 endef
 TARGET_DEVICES += ubnt_unifi-6-lite
-
-define Device/ubnt_unifi-nanohd
-  $(Device/dsa-migration)
-  DEVICE_VENDOR := Ubiquiti
-  DEVICE_MODEL := UniFi nanoHD
-  DEVICE_PACKAGES += kmod-mt7603 kmod-mt7615e kmod-mt7615-firmware
-  IMAGE_SIZE := 15552k
-endef
-TARGET_DEVICES += ubnt_unifi-nanohd
 
 define Device/unielec_u7621-01-16m
   $(Device/dsa-migration)
