@@ -20,6 +20,7 @@ validate_log_section()
 		'log_port:port:514' \
 		'log_proto:or("tcp", "udp"):udp' \
 		'log_trailer_null:bool:0' \
+		'log_priority:uinteger' \
 		'log_prefix:string'
 }
 
@@ -80,6 +81,7 @@ start_service_remote()
 		"tcp") [ "${log_trailer_null}" -eq 1 ] && procd_append_param command -0;;
 	esac
 	[ -z "${log_prefix}" ] || procd_append_param command -P "${log_prefix}"
+	[ -z "${log_priority}" ] || procd_append_param command -m "${log_priority}"
 	procd_close_instance
 }
 
