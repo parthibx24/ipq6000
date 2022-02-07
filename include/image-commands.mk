@@ -372,8 +372,9 @@ define Build/qemu-image
 endef
 
 define Build/qsdk-ipq-factory-nand
-	$(TOPDIR)/scripts/mkits-qsdk-ipq-image.sh \
-		$@.its ubi $@
+	$(TOPDIR)/scripts/mkits-qsdk-ipq-image.sh $@.its \
+		script script $(TOPDIR)/scripts/qsdk-flash.scr \
+		ubi firmware $@
 	PATH=$(LINUX_DIR)/scripts/dtc:$(PATH) mkimage -f $@.its $@.new
 	@mv $@.new $@
 endef

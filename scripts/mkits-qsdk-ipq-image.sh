@@ -15,12 +15,12 @@
 #
 
 usage() {
-	echo "Usage: `basename $0` output img0_name img0_file [[img1_name img1_file] ...]"
+	echo "Usage: `basename $0` output img0_name img0_type img0_file [[img1_name img1_type img1_file] ...]"
 	exit 1
 }
 
 # We need at least 3 arguments
-[ "$#" -lt 3 ] && usage
+[ "$#" -lt 4 ] && usage
 
 # Target output file
 OUTPUT="$1"; shift
@@ -35,17 +35,18 @@ echo "\
 
 	images {" > ${OUTPUT}
 
-while [ -n "$1" -a -n "$2" ]; do
-	[ -f "$2" ] || usage
+while [ -n "$1" -a -n "$2" -a -n "$3" ]; do
+	[ -f "$3" ] || usage
 
 	name="$1"; shift
+	type="$1"; shift
 	file="$1"; shift
 
 	echo \
 "		${name} {
 			description = \"${name}\";
 			data = /incbin/(\"${file}\");
-			type = \"Firmware\";
+			type = \"${type}\";
 			arch = \"ARM\";
 			compression = \"none\";
 			hash@1 {
