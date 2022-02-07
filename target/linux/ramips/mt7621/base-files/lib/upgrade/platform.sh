@@ -46,6 +46,15 @@ platform_do_upgrade() {
 		dd if=/dev/mtd5 bs=1024 count=52224 >> /tmp/backup_firmware.bin
 		mtd -e firmware2 write /tmp/backup_firmware.bin firmware2
 		;;
+	actiontec,web7200)
+		if grep -q bootselect=0 /proc/cmdline; then
+			PART_NAME=firmware2
+			fw_setenv bootselect 1 || exit 1
+		else
+			PART_NAME=firmware1
+			fw_setenv bootselect 0 || exit 1
+		fi
+		;;
 	esac
 
 	case "$board" in
