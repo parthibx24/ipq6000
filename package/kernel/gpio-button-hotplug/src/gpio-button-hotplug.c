@@ -286,7 +286,7 @@ static void gpio_keys_handle_button(struct gpio_keys_button_data *bdata)
 	if (bdata->seen == 0)
 		bdata->seen = seen;
 
-	button_hotplug_create_event(button_map[bdata->map_entry].name, type,
+	button_hotplug_create_event(bdata->b->desc ? bdata->b->desc : button_map[bdata->map_entry].name, type,
 				    (seen - bdata->seen) / HZ, state);
 	bdata->seen = seen;
 
