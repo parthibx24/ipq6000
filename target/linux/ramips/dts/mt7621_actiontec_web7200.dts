@@ -51,68 +51,70 @@
 		};
 	};
 
-	nmbm {
-		compatible = "generic,nmbm";
-		lower-mtd-device = <&nand>;
-		forced-create;
-		#size-cells = <0x01>;
-		#address-cells = <0x01>;
-
-		partitions {
-			compatible = "fixed-partitions";
-			#size-cells = <0x01>;
-			#address-cells = <0x01>;
-
-			partition@0 {
-				label = "u-boot";
-				reg = <0x00 0x80000>;
-				read-only;
-			};
-
-			partition@80000 {
-				label = "u-boot-env";
-				reg = <0x80000 0x80000>;
-			};
-
-			factory: partition@100000 {
-				label = "factory";
-				reg = <0x100000 0x80000>;
-			};
-
-			partition@180000 {
-				compatible = "denx,fit";
-				label = "firmware";
-				openwrt,cmdline-match = "bootselect=0";
-				reg = <0x180000 0x3000000>;
-			};
-
-			partition@3180000 {
-				compatible = "denx,fit";
-				label = "firmware2";
-				openwrt,cmdline-match = "bootselect=1";
-				reg = <0x3180000 0x3000000>;
-			};
-
-			partition@6980000 {
-				label = "aei_data";
-				reg = <0x6980000 0x400000>;
-			};
-
-			partition@6180000 {
-				label = "aei_data_ext";
-				reg = <0x6180000 0x800000>;
-			};
-		};
-	};
 };
 
 &nand {
 	status = "okay";
 
+	mediatek,nmbm;
+	mediatek,bmt-remap-range =
+		<0x0 0x580000>,
+		<0x3180000 0x3580000>;
+
 	partitions {
 		compatible = "fixed-partitions";
 		#address-cells = <1>;
 		#size-cells = <1>;
+
+		partition@0 {
+			label = "u-boot";
+			reg = <0x00 0x80000>;
+			read-only;
+		};
+
+		partition@80000 {
+			label = "u-boot-env";
+			reg = <0x80000 0x80000>;
+		};
+
+		factory: partition@100000 {
+			label = "factory";
+			reg = <0x100000 0x80000>;
+		};
+
+		partition@180000 {
+			compatible = "denx,fit";
+			label = "firmware";
+			openwrt,cmdline-match = "bootselect=0";
+			reg = <0x180000 0x3000000>;
+		};
+
+		partition@580000 {
+			label = "ubi_1";
+			reg = <0x580000 0x2c00000>;
+		};
+
+		partition@3180000 {
+			compatible = "denx,fit";
+			label = "firmware2";
+			openwrt,cmdline-match = "bootselect=1";
+			reg = <0x3180000 0x3000000>;
+		};
+
+		partition@3580000 {
+			label = "ubi_2";
+			reg = <0x3580000 0x2c00000>;
+		};
+
+		partition@6980000 {
+			label = "aei_data";
+			reg = <0x6980000 0x400000>;
+		};
+
+		partition@6180000 {
+			label = "aei_data_ext";
+			reg = <0x6180000 0x800000>;
+		};
 	};
 };
 

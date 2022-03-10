@@ -48,16 +48,19 @@ platform_do_upgrade() {
 		;;
 	actiontec,web7200)
 		if grep -q bootselect=0 /proc/cmdline; then
-			PART_NAME=firmware2
+			CI_KERNPART=firmware2
+			CI_UBIPART=ubi_2
 			fw_setenv bootselect 1 || exit 1
 		else
-			PART_NAME=firmware1
+			CI_KERNPART=firmware
+			CI_UBIPART=ubi_1
 			fw_setenv bootselect 0 || exit 1
 		fi
 		;;
 	esac
 
 	case "$board" in
+	actiontec,web7200|\
 	ampedwireless,ally-00x19k|\
 	ampedwireless,ally-r1900k|\
 	asus,rt-ac65p|\

@@ -111,11 +111,20 @@ define Device/dsa-migration
 endef
 
 define Device/actiontec_web7200
+  $(Device/dsa-migration)
   DEVICE_VENDOR := Actiontec
   DEVICE_MODEL := EB7200
   DEVICE_PACKAGES += kmod-mt7603 kmod-mt7915e kmod-usb3 uboot-envtools kmod-i2c-core
+  LOADER_TYPE := bin
+  KERNEL_SIZE := 4096k
+  BLOCKSIZE := 128k
+  PAGESIZE := 2048
+  UBINIZE_OPTS := -E 5
+  KERNEL_INITRAMFS := kernel-bin | lzma | loader-kernel | gzip | fit-relocate gzip $$(KDIR)/image-$$(firstword $$(DEVICE_DTS)).dtb
   KERNEL := kernel-bin | relocate-kernel | lzma | fit-relocate lzma $$(KDIR)/image-$$(firstword $$(DEVICE_DTS)).dtb
-  IMAGE_SIZE := 15552k
+  IMAGES += factory.bin
+  IMAGE/sysupgrade.bin := sysupgrade-tar | append-metadata
+  IMAGE/factory.bin := append-kernel | pad-to $$(KERNEL_SIZE) | append-ubi
 endef
 TARGET_DEVICES += actiontec_web7200
 
@@ -1403,6 +1412,15 @@ define Device/ubnt_unifi-6-lite
   IMAGE_SIZE := 15424k
 endef
 TARGET_DEVICES += ubnt_unifi-6-lite
+
+define Device/ubnt_unifi-nanohd
+  $(Device/dsa-migration)
+  DEVICE_VENDOR := Ubiquiti
+  DEVICE_MODEL := UniFi nanoHD
+  DEVICE_PACKAGES += kmod-mt7603 kmod-mt7615e kmod-mt7615-firmware
+  IMAGE_SIZE := 15552k
+endef
+TARGET_DEVICES += ubnt_unifi-nanohd
 
 define Device/unielec_u7621-01-16m
   $(Device/dsa-migration)
