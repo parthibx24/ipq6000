@@ -1229,7 +1229,8 @@ static int mt7621_nfc_init_chip(struct mt7621_nfc *nfc)
 	nand_set_controller_data(nand, (void *)nfc);
 	nand_set_flash_node(nand, nfc->dev->of_node);
 
-	nand->options |= NAND_USE_BOUNCE_BUFFER | NAND_NO_SUBPAGE_WRITE;
+	nand->options |= NAND_USE_BOUNCE_BUFFER | NAND_NO_SUBPAGE_WRITE |
+			 NAND_SKIP_BBTSCAN;
 	if (!nfc->nfi_clk)
 		nand->options |= NAND_KEEP_TIMINGS;
 
