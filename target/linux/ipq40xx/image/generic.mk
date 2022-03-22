@@ -890,3 +890,17 @@ define Device/hfcl_ion4
 	DEVICE_PACKAGES := uboot-envtools
 endef
 TARGET_DEVICES += hfcl_ion4
+
+define Device/um-325ac
+	DEVICE_VENDOR := Indio Networks
+	DEVICE_MODEL := UM-325AC
+	BOARD_NAME := um-325ac
+	SOC := qcom-ipq4019
+	DEVICE_DTS := qcom-ipq4019-um-325ac
+	KERNEL_INSTALL := 1
+	KERNEL_SIZE := 4096k
+	IMAGE_SIZE := 26624k
+	$(call Device/FitImage)
+	IMAGE/sysupgrade.bin := append-kernel | pad-to $$$$(KERNEL_SIZE) | append-rootfs | pad-rootfs | append-metadata
+endef
+TARGET_DEVICES += um-325ac
