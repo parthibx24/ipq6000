@@ -904,3 +904,17 @@ define Device/um-325ac
 	IMAGE/sysupgrade.bin := append-kernel | pad-to $$$$(KERNEL_SIZE) | append-rootfs | pad-rootfs | append-metadata
 endef
 TARGET_DEVICES += um-325ac
+
+define Device/udaya_a5-id2
+	DEVICE_VENDOR := udaya
+	DEVICE_MODEL := A5-ID2
+	SOC := qcom-ipq4018
+	DEVICE_DTS := qcom-ipq4018-udaya-a5-id2
+	KERNEL_INSTALL := 1
+	KERNEL_SIZE := 4096k
+	IMAGE_SIZE := 26624k
+	DEVICE_PACKAGES := ipq-wifi-udaya-a5-id2
+	$(call Device/FitImage)
+	IMAGE/sysupgrade.bin := append-kernel | pad-to $$$$(KERNEL_SIZE) | append-rootfs | pad-rootfs | append-metadata
+endef
+TARGET_DEVICES += udaya_a5-id2

@@ -1,8 +1,8 @@
-Index: linux-5.4.111/arch/arm/boot/dts/Makefile
+Index: linux-5.4.158/arch/arm/boot/dts/Makefile
 ===================================================================
---- linux-5.4.111.orig/arch/arm/boot/dts/Makefile
-+++ linux-5.4.111/arch/arm/boot/dts/Makefile
-@@ -885,6 +885,7 @@ dtb-$(CONFIG_ARCH_QCOM) += \
+--- linux-5.4.158.orig/arch/arm/boot/dts/Makefile
++++ linux-5.4.158/arch/arm/boot/dts/Makefile
+@@ -888,6 +888,7 @@ dtb-$(CONFIG_ARCH_QCOM) += \
  	qcom-ipq4019-wpj419.dtb \
  	qcom-ipq4019-wtr-m2133hp.dtb \
  	qcom-ipq4019-tp-link-ec420-g1.dtb \
@@ -10,3 +10,11 @@ Index: linux-5.4.111/arch/arm/boot/dts/Makefile
  	qcom-ipq4028-wpj428.dtb \
  	qcom-ipq4029-ap-303.dtb \
  	qcom-ipq4029-ap-303h.dtb \
+@@ -906,6 +907,7 @@ dtb-$(CONFIG_ARCH_QCOM) += \
+ 	qcom-msm8974-sony-xperia-castor.dtb \
+ 	qcom-msm8974-sony-xperia-honami.dtb \
+ 	qcom-mdm9615-wp8548-mangoh-green.dtb \
++	qcom-ipq4018-udaya-a5-id2.dtb \
+ 	qcom-ipq4019-um-325ac.dtb
+ dtb-$(CONFIG_ARCH_RDA) += \
+ 	rda8810pl-orangepi-2g-iot.dtb \

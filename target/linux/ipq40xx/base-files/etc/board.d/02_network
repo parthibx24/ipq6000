@@ -50,6 +50,7 @@ ipq40xx_setup_interfaces()
 	edgecore,ecw5211|\
 	edgecore,spw2ac1200 |\
 	edgecore,oap100|\
+	udaya,a5-id2|\
 	openmesh,a42|\
 	openmesh,a62)
 		ucidef_set_interfaces_lan_wan "eth1" "eth0"
