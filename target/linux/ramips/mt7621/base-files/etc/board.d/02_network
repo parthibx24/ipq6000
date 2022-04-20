@@ -33,6 +33,7 @@ ramips_setup_interfaces()
 		;;
 	actiontec,web7200|\
 	asiarf,ap7621-001|\
+	indio,um-305ax|\
 	winstars,ws-wn583a6)
 		ucidef_set_interfaces_lan_wan "lan" "wan"
 		;;
@@ -172,6 +173,11 @@ ramips_setup_macs()
 		label_mac=$(cat "/sys/firmware/mikrotik/hard_config/mac_base")
 		wan_mac=$label_mac
 		lan_mac=$(macaddr_add $label_mac 1)
+		;;
+	indio,um-305ax)
+		label_mac=$(mtd_get_mac_binary factory 0x4)
+		wan_mac=$(macaddr_add $label_mac 1)
+		lan_mac=$label_mac
 		;;
 	esac
 

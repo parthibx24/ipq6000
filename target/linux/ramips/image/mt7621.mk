@@ -1736,3 +1736,15 @@ define Device/zyxel_wap6805
   IMAGE/sysupgrade.bin := sysupgrade-tar | append-metadata
 endef
 TARGET_DEVICES += zyxel_wap6805
+
+define Device/indio_um-305ax
+  $(Device/dsa-migration)
+  DEVICE_VENDOR := INDIO
+  DEVICE_MODEL := UM-305AX
+  DEVICE_DTS_CONFIG := config@1
+  DEVICE_PACKAGES += kmod-mt7915e
+  KERNEL := kernel-bin | lzma | fit lzma $$(KDIR)/image-$$(firstword $$(DEVICE_DTS)).dtb
+  IMAGE_SIZE := 15774k
+endef
+TARGET_DEVICES += indio_um-305ax
+

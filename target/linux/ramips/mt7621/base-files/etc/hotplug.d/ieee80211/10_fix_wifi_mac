@@ -15,6 +15,12 @@ case "$board" in
 		[ "$PHYNBR" = "0" ] && macaddr_add $wan_mac 2 > /sys${DEVPATH}/macaddress
 		[ "$PHYNBR" = "1" ] && macaddr_add $wan_mac 3 > /sys${DEVPATH}/macaddress
 		;;
+	indio,um-305ax)
+		[ "$PHYNBR" = "0" ] && \
+			macaddr_add "$(mtd_get_mac_binary factory 0x4)" 2 > /sys${DEVPATH}/macaddress
+		[ "$PHYNBR" = "1" ] && \
+			macaddr_add "$(mtd_get_mac_binary factory 0x4)" 3 > /sys${DEVPATH}/macaddress
+		;;
 	glinet,gl-mt1300)
 		[ "$PHYNBR" = "1" ] && \
 			macaddr_add "$(mtd_get_mac_binary factory 0x4)" 1 > /sys${DEVPATH}/macaddress
