@@ -66,7 +66,7 @@ define CompileBPF
 	LD_LIBRARY_PATH=$(LD_LIBRARY_PATH):$(STAGING_DIR_HOST)/lib \
 	$(LLVM_DIS) < $(patsubst %.c,%.opt,$(1)) > $(patsubst %.c,%.S,$(1))
 	LD_LIBRARY_PATH=$(LD_LIBRARY_PATH):$(STAGING_DIR_HOST)/lib \
-	$(LLVM_LLC) -march=$(BPF_TARGET) -filetype=obj -o $(patsubst %.c,%.o,$(1)) < $(patsubst %.c,%.S,$(1))
+	$(LLVM_LLC) -march=$(BPF_TARGET) -mcpu=v3 -filetype=obj -o $(patsubst %.c,%.o,$(1)) < $(patsubst %.c,%.S,$(1))
 	LD_LIBRARY_PATH=$(LD_LIBRARY_PATH):$(STAGING_DIR_HOST)/lib \
 	$(LLVM_STRIP) --strip-debug $(patsubst %.c,%.o,$(1))
 endef
