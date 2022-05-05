@@ -84,8 +84,8 @@ define KernelPackage/iio-hmc5843
   TITLE:=Honeywell HMC58x3 Magnetometer
   KCONFIG:= CONFIG_SENSORS_HMC5843_I2C
   FILES:= \
-      $(LINUX_DIR)/drivers/iio/magnetometer/hmc5843_i2c.ko \
-      $(LINUX_DIR)/drivers/iio/magnetometer/hmc5843_core.ko
+      $(LINUX_DIR)/drivers/staging/iio/magnetometer/hmc5843_i2c.ko \
+      $(LINUX_DIR)/drivers/staging/iio/magnetometer/hmc5843_core.ko
   AUTOLOAD:=$(call AutoLoad,56,hmc5843)
 endef
 

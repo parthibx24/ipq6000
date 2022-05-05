@@ -721,29 +721,6 @@ endef
 
 $(eval $(call KernelPackage,i40e))
 
-
-define KernelPackage/iavf
-  SUBMENU:=$(NETWORK_DEVICES_MENU)
-  TITLE:=Intel(R) Ethernet Adaptive Virtual Function support
-  DEPENDS:=@PCI_SUPPORT
-  KCONFIG:= \
-       CONFIG_I40EVF \
-       CONFIG_IAVF
-  FILES:= \
-       $(LINUX_DIR)/drivers/net/ethernet/intel/iavf/iavf.ko
-  AUTOLOAD:=$(call AutoProbe,i40evf iavf)
-  AUTOLOAD:=$(call AutoProbe,iavf)
-endef
-
-define KernelPackage/iavf/description
- Kernel modules for Intel XL710,
-	  X710, X722, XXV710, and all devices advertising support for
-	  Intel Ethernet Adaptive Virtual Function devices.
-endef
-
-$(eval $(call KernelPackage,iavf))
-
-
 define KernelPackage/b44
   TITLE:=Broadcom 44xx driver
   KCONFIG:=CONFIG_B44
@@ -1193,7 +1170,7 @@ $(eval $(call KernelPackage,igc))
 define KernelPackage/sfc
   SUBMENU:=$(NETWORK_DEVICES_MENU)
   TITLE:=Solarflare SFC9000/SFC9100/EF100-family support
-  DEPENDS:=@PCI_SUPPORT +kmod-mdio +kmod-lib-crc32c +kmod-ptp +kmod-hwmon-core
+  DEPENDS:=@PCI_SUPPORT +kmod-mdio +kmod-lib-crc32c +kmod-ptp +kmod-hwmon-core +kmod-i2c-algo-bit
   KCONFIG:= \
 	CONFIG_SFC \
 	CONFIG_SFC_MTD=y \

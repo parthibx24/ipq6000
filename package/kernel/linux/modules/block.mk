@@ -555,6 +555,7 @@ define KernelPackage/scsi-cdrom
     CONFIG_BLK_DEV_SR \
     CONFIG_BLK_DEV_SR_VENDOR=n
   FILES:=$(LINUX_DIR)/drivers/scsi/sr_mod.ko
+  FILES+=$(LINUX_DIR)/drivers/cdrom/cdrom.ko
   AUTOLOAD:=$(call AutoLoad,45,sr_mod)
 endef
 

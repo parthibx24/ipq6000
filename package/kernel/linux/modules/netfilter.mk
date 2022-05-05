@@ -541,8 +541,9 @@ define KernelPackage/nf-nathelper-extra
   TITLE:=Extra Conntrack and NAT helpers
   KCONFIG:=$(KCONFIG_NF_NATHELPER_EXTRA)
   FILES:=$(foreach mod,$(NF_NATHELPER_EXTRA-m),$(LINUX_DIR)/net/$(mod).ko)
+  FILES+= $(LINUX_DIR)/net/netfilter/nf_conntrack_proto_gre.ko  $(LINUX_DIR)/net/ipv4/netfilter/nf_nat_proto_gre.ko
   AUTOLOAD:=$(call AutoProbe,$(notdir $(NF_NATHELPER_EXTRA-m)))
-  DEPENDS:=+kmod-nf-nat +kmod-lib-textsearch +kmod-ipt-raw +!LINUX_4_14:kmod-asn1-decoder
+  DEPENDS:=+kmod-nf-nat +kmod-lib-textsearch +kmod-ipt-raw +!LINUX_4_14:kmod-asn1-decoder kmod-pptp
 endef
 
 define KernelPackage/nf-nathelper-extra/description
