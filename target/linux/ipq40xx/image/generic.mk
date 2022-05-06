@@ -932,3 +932,18 @@ define Device/um-550ac
 	IMAGE/sysupgrade.bin := append-kernel | pad-to $$$$(KERNEL_SIZE) | append-rootfs | pad-rootfs | append-metadata
 endef
 TARGET_DEVICES += um-550ac
+
+
+define Device/um-510ac-v3
+	DEVICE_VENDOR := Indio Networks
+	DEVICE_MODEL := UM-510AC-V3
+	BOARD_NAME := um-510ac-v3
+	SOC := qcom-ipq4019
+	DEVICE_DTS := qcom-ipq4019-um-510ac-v3
+	KERNEL_INSTALL := 1
+	KERNEL_SIZE := 4096k
+	IMAGE_SIZE := 26624k
+	$(call Device/FitImage)
+	IMAGE/sysupgrade.bin := append-kernel | pad-to $$$$(KERNEL_SIZE) | append-rootfs | pad-rootfs | append-metadata
+endef
+TARGET_DEVICES += um-510ac-v3
