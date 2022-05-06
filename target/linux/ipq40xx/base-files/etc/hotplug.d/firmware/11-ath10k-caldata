@@ -173,7 +173,8 @@ case "$FIRMWARE" in
 		caldata_extract "0:ART" 4096 12064
 		ath10k_patch_mac $(mtd_get_mac_ascii 0:ART WLAN0_BASEMAC)
 		;;
-	um-325ac)
+	um-325ac |\
+	um-550ac) 
 		caldata_extract "ART" 0x1000 0x2f20
 		;;
 	esac
@@ -298,7 +299,8 @@ case "$FIRMWARE" in
 		caldata_extract "0:ART" 20480 12064
 		ath10k_patch_mac $(mtd_get_mac_ascii 0:ART WLAN1_BASEMAC)
 		;;
-	um-325ac)
+	um-325ac |\
+	um-550ac) 
 		caldata_extract "ART" 0x5000 0x2f20
 		;;
 	esac

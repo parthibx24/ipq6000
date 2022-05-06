@@ -918,3 +918,17 @@ define Device/udaya_a5-id2
 	IMAGE/sysupgrade.bin := append-kernel | pad-to $$$$(KERNEL_SIZE) | append-rootfs | pad-rootfs | append-metadata
 endef
 TARGET_DEVICES += udaya_a5-id2
+
+define Device/um-550ac
+	DEVICE_VENDOR := Indio Networks
+	DEVICE_MODEL := UM-550AC
+	BOARD_NAME := um-550ac
+	SOC := qcom-ipq4019
+	DEVICE_DTS := qcom-ipq4019-um-550ac
+	KERNEL_INSTALL := 1
+	KERNEL_SIZE := 4096k
+	IMAGE_SIZE := 26624k
+	$(call Device/FitImage)
+	IMAGE/sysupgrade.bin := append-kernel | pad-to $$$$(KERNEL_SIZE) | append-rootfs | pad-rootfs | append-metadata
+endef
+TARGET_DEVICES += um-550ac
