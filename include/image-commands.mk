@@ -354,6 +354,13 @@ define Build/qsdk-ipq-factory-nor
 	@mv $@.new $@
 endef
 
+define Build/qsdk-ipq-factory-mmc
+	$(TOPDIR)/scripts/mkits-qsdk-ipq-image.sh \
+		$@.its hlos $(IMAGE_KERNEL) rootfs $(IMAGE_ROOTFS)
+	PATH=$(LINUX_DIR)/scripts/dtc:$(PATH) mkimage -f $@.its $@.new
+	@mv $@.new $@
+endef
+
 define Build/seama
 	$(STAGING_DIR_HOST)/bin/seama -i $@ \
 		-m "dev=/dev/mtdblock/$(SEAMA_MTDBLOCK)" -m "type=firmware"
