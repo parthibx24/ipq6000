@@ -1106,6 +1106,7 @@ dnsmasq_start()
 		[ -n "$BOOT" ] || config_foreach filter_dnsmasq dhcp dhcp_add "$cfg"
 	fi
 
+	xappend "except-interface=ifb-dhcp"
 
 	echo >> $CONFIGFILE_TMP
 	config_foreach filter_dnsmasq cname dhcp_cname_add "$cfg"
