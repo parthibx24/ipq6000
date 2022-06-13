@@ -38,8 +38,7 @@ define Package/wireguard-tools
   TITLE:=WireGuard userspace control program (wg)
   DEPENDS:= \
 	  +@BUSYBOX_CONFIG_IP \
-	  +@BUSYBOX_CONFIG_FEATURE_IP_LINK \
-	  +kmod-wireguard
+	  +@BUSYBOX_CONFIG_FEATURE_IP_LINK
 endef
 
 define Package/wireguard-tools/description
