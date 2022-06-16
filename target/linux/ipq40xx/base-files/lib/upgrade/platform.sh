@@ -66,7 +66,6 @@ platform_do_upgrade() {
 	avm,fritzrepeater-3000 |\
 	buffalo,wtr-m2133hp |\
 	cilab,meshpoint-one |\
-	edgecore,ecw5211 |\
 	edgecore,oap100 |\
 	engenius,eap2200 |\
 	glinet,gl-ap1300 |\
@@ -76,6 +75,24 @@ platform_do_upgrade() {
 	wallys,dr40x9 |\
 	hfcl,ion4 |\
 	tp-link,ec420-g1)
+		nand_do_upgrade "$1"
+		;;
+	edgecore,ecw5211)
+		mkdir -p /var/lock/
+		part="$(awk -F 'ubi.mtd=' '{printf $2}' /proc/cmdline | cut -d " " -f 1)"
+		case "$part" in
+		rootfs1)
+			fw_setenv active 2 || exit 1
+			CI_UBIPART="rootfs2"
+			;;
+		rootfs2)
+			fw_setenv active 1 || exit 1
+			CI_UBIPART="rootfs1"
+			;;
+		*)
+			# legacy bootloader
+			;;
+		esac
 		nand_do_upgrade "$1"
 		;;
 	alfa-network,ap120c-ac)
