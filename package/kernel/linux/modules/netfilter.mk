@@ -859,7 +859,7 @@ define KernelPackage/br-netfilter
   TITLE:=Bridge netfilter support modules
   DEPENDS:=+kmod-ipt-core
   FILES:=$(LINUX_DIR)/net/bridge/br_netfilter.ko
-  KCONFIG:=CONFIG_BRIDGE_NETFILTER
+  KCONFIG:=CONFIG_BRIDGE_NETFILTER=y
   AUTOLOAD:=$(call AutoProbe,br_netfilter)
 endef
 
