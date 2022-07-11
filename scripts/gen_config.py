@@ -4,6 +4,8 @@ from os import getenv
 from pathlib import Path
 from shutil import rmtree, which
 from subprocess import run
+from subprocess import call
+import time
 import sys
 import yaml
 
@@ -191,6 +193,27 @@ CONFIG_TARGET_{profile["target"]}_{profile["subtarget"]}_DEVICE_{profile["profil
     Path(".config").write_text(config_output)
     print("Configuration written to .config")
 
+def load_metadata():
+    try:
+      with open("gl_metadata.yaml", "r") as stream:
+        metadata=yaml.safe_load(stream)
+        version = metadata["version"]
+        call("echo %s > %s" % (version, "files/etc/glversion"), shell=True)
+        call("echo %s > %s" % (version, "release"), shell=True)
+        version_type = metadata["type"]
+        call("echo %s > %s" % (version_type, "files/etc/version.type"), shell=True)
+        print("firmware version: " +version)
+        print("firmware type: " +version_type)
+    except:
+      pass
+
+def generate_files(profile):
+    if run(["mkdir", "-p", "files/etc"]).returncode:
+        die(f"Error create files")
+
+    compile_time = time.strftime('%Y-%m-%d %k:%M:%S', time.localtime(time.time()))
+    call("echo %s > %s" % (compile_time, "files/etc/version.date"), shell=True)
+    load_metadata()
 
 if __name__ == "__main__":
     if "list" in sys.argv:
@@ -225,6 +248,7 @@ if __name__ == "__main__":
     clean_tree()
     setup_feeds(profile)
     generate_config(profile)
+    generate_files(profile)
     run(["rm", "-rf", "tmp/"])
     print("Running make defconfig")
     if run(["make", "defconfig"]).returncode:
