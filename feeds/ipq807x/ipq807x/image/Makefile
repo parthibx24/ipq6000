@@ -13,9 +13,9 @@ define Device/Default
   ROOTFSNAME_IN_UBI := ubi_rootfs
   BLOCKSIZE := 128k
   PAGESIZE := 2048
-  IMAGES := sysupgrade.tar nand-factory.bin
+  IMAGES := sysupgrade.tar nand-factory.img
   IMAGE/sysupgrade.tar := sysupgrade-tar | append-metadata
-  IMAGE/nand-factory.bin := append-ubi | qsdk-ipq-factory-nand
+  IMAGE/nand-factory.img := append-ubi | qsdk-ipq-factory-nand
   KERNEL_NAME := Image
   KERNEL = kernel-bin | gzip | fit gzip $$(KDIR)/image-$$(firstword $$(DEVICE_DTS)).dtb
   KERNEL_INITRAMFS = kernel-bin | gzip | fit gzip $$(KDIR)/image-$$(firstword $$(DEVICE_DTS)).dtb
