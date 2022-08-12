@@ -49,6 +49,17 @@ ath11k_generate_macs_ion4x() {
 	echo -ne \\x${wifimac2//:/\\x} >> /lib/firmware/ath11k-macs
 }
 
+ath11k_generate_macs_gl_axt1800() {
+	mac=$(cat /proc/gl-hw-info/device_mac)
+	[ -z "$mac" ] && ath11k_generate_macs || {
+		touch /lib/firmware/ath11k-macs
+		mac1=$(macaddr_add $mac 2)
+		mac2=$(macaddr_add $mac 3)
+		echo -ne \\x${mac2//:/\\x} >> /lib/firmware/ath11k-macs
+		echo -ne \\x${mac1//:/\\x} >> /lib/firmware/ath11k-macs
+	}
+}
+
 caldata_die() {
         echo "caldata: " "$*"
         exit 1
@@ -98,6 +109,7 @@ case "$FIRMWARE" in
 	wallys,dr6018-v4|\
 	qcom,ipq6018-cp01|\
 	xiaomi,ax1800|\
+	glinet,axt1800|\
 	glinet,ax1800)
                 caldata_extract "0:ART" 0x1000 0x20000  
 		;;
@@ -163,6 +175,10 @@ ath11k-macs)
 	cig,wf194c|\
 	cig,wf194c)
 		ath11k_generate_macs_wf194
+		;;
+	glinet,ax1800|\
+	glinet,axt1800)
+		ath11k_generate_macs_gl_axt1800
 		;;
 	esac
 	;;
