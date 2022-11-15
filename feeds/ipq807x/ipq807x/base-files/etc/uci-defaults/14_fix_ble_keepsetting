@@ -1,0 +1,14 @@
+#!/bin/sh
+
+. /lib/functions.sh
+board=$(board_name)
+
+if [ "$board" = "glinet,ax1800" ]; then
+	pwd=`cat /etc/shadow | grep 'root:$1$*'`
+	if [ -n "$pwd" ];then
+		if [ -f /usr/sbin/ble_config_wifi ]; then
+			uci set glconfig.general.blueconfig='1'
+			uci commit glconfig
+		fi
+	fi
+fi
