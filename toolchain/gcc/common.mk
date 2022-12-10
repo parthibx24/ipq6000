@@ -94,6 +94,7 @@ GCC_CONFIGURE:= \
 		CFLAGS="-O2 -fbracket-depth=512 -pipe" \
 		CXXFLAGS="-O2 -fbracket-depth=512 -pipe" \
 	) \
+	CXXFLAGS=--std=c++14 \
 	$(HOST_SOURCE_DIR)/configure \
 		--with-bugurl=$(BUGURL) \
 		--with-pkgversion="$(PKGVERSION)" \
