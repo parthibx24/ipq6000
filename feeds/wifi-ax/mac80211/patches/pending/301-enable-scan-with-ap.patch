@@ -1,0 +1,12 @@
+Index: backports-20210222_001-4.4.60-b157d2276/net/mac80211/cfg.c
+===================================================================
+--- backports-20210222_001-4.4.60-b157d2276.orig/net/mac80211/cfg.c
++++ backports-20210222_001-4.4.60-b157d2276/net/mac80211/cfg.c
+@@ -2629,6 +2629,7 @@ static int ieee80211_scan(struct wiphy *
+ 		 */
+ 		fallthrough;
+ 	case NL80211_IFTYPE_AP:
++		break;
+ 		/*
+ 		 * If the scan has been forced (and the driver supports
+ 		 * forcing), don't care about being beaconing already.
