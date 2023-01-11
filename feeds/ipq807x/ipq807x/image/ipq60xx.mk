@@ -68,6 +68,8 @@ define Device/glinet_ax1800
   SUPPORTED_DEVICES := glinet,ax1800
   DEVICE_DTS_CONFIG := config@cp03-c1
   DEVICE_PACKAGES := ath11k-wifi-gl-ax1800 -kmod-usb-dwc3-of-simple kmod-usb-dwc3-qcom kmod-usb3
+  IMAGE/sysupgrade.tar := sysupgrade-tar | append-gl-metadata
+  IMAGE/nand-factory.img := append-ubi | qsdk-ipq-factory-nand | append-gl-metadata
 endef
 TARGET_DEVICES += glinet_ax1800
 
@@ -77,6 +79,7 @@ define Device/glinet_axt1800
   SUPPORTED_DEVICES := glinet,axt1800
   DEVICE_DTS_CONFIG := config@cp03-c1
   DEVICE_PACKAGES := ath11k-wifi-gl-axt1800 -kmod-usb-dwc3-of-simple kmod-usb-dwc3-qcom kmod-usb3
+  IMAGE/sysupgrade.tar := sysupgrade-tar | append-gl-metadata
 endef
 TARGET_DEVICES += glinet_axt1800
 
