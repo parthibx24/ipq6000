@@ -1,0 +1,14 @@
+Index: backports-20210222_001-4.4.60-b157d2276/drivers/net/wireless/ath/ath11k/wmi.c
+===================================================================
+--- backports-20210222_001-4.4.60-b157d2276.orig/drivers/net/wireless/ath/ath11k/wmi.c
++++ backports-20210222_001-4.4.60-b157d2276/drivers/net/wireless/ath/ath11k/wmi.c
+@@ -444,6 +444,9 @@ ath11k_pull_mac_phy_cap_svc_ready_ext(st
+ 		       sizeof(u32) * PSOC_HOST_MAX_PHY_SIZE);
+ 		memcpy(&cap_band->he_ppet, &mac_phy_caps->he_ppet5g,
+ 		       sizeof(struct ath11k_ppe_threshold));
++
++		cap_band->he_cap_phy_info[0] &= ~IEEE80211_HE_PHY_CAP0_CHANNEL_WIDTH_SET_160MHZ_IN_5G;
++		cap_band->he_cap_phy_info[0] &= ~IEEE80211_HE_PHY_CAP0_CHANNEL_WIDTH_SET_80PLUS80_MHZ_IN_5G;
+ 	}
+ 
+ 	cap_band = &pdev_cap->band[NL80211_BAND_6GHZ];
