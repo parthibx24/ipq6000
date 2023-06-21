@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019, The Linux Foundation. All rights reserved.
+ * Copyright (c) 2018-2020, The Linux Foundation. All rights reserved.
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -28,15 +28,36 @@
 		ethernet1 = "/soc/dp2";
 		ethernet2 = "/soc/dp3";
 
-		led-boot = &led_run;
-		led-failsafe = &led_run;
-		led-running = &led_run;
-		led-upgrade = &led_run;
+		//led-boot = &led_run;
+		//led-failsafe = &led_run;
+		//led-running = &led_run;
+		//led-upgrade = &led_run;
 	};
 
 	chosen {
 		bootargs = "console=ttyMSM0,115200,n8 rw init=/init";
 		bootargs-append = " swiotlb=1 coherent_pool=2M";
+	};
+
+	gl_hw: gl_hw {
+		compatible = "gl-hw-info";
+		#address-cells = <1>;
+		#size-cells = <1>;
+		model = "axt1800";
+		wan = "eth0";
+		reset-button = "gpio-50";
+		usb-port = "1-1,2-1";
+		usb-reset = "usb_power,1";
+		flash_size = <128>;
+		temperature = "/sys/devices/virtual/thermal/thermal_zone0/temp";
+		radio = "radio0";
+		factory_data {
+			device_mac = "0:ART", "0x0";
+			device_ddns = "0:ART", "0x20";
+			device_sn_bak = "0:ART", "0x30";
+			device_sn = "0:ART", "0x40";
+			country_code = "0:ART", "0x98";
+		};
 	};
 };
 
@@ -101,7 +122,7 @@
 		};
 		qpic_pad {
 			pins = "gpio1", "gpio3", "gpio4",
-			       "gpio10", "gpio11", "gpio17";
+				   "gpio10", "gpio11", "gpio17";
 			function = "qpic_pad";
 			drive-strength = <8>;
 			bias-pull-down;
@@ -250,14 +271,14 @@
 		pinctrl-0 = <&leds_pins>;
 		pinctrl-names = "default";
 
-		led_run: led@35 {
-			label = "white:sys";
+		led_run: white {
+			label = "white_led";
 			gpios = <&tlmm 35 GPIO_ACTIVE_HIGH>;
-			default-state = "on";
+			default-state = "off";
 		};
 
-		led@37 {
-			label = "blue:wan";
+		blue {
+			label = "blue_led";
 			gpios = <&tlmm 37 GPIO_ACTIVE_HIGH>;
 			default-state = "on";
 		};
@@ -271,7 +292,7 @@
 		switch {
 			label = "switch";
 			linux,code = <KEY_WPS_BUTTON>;
-			gpios = <&tlmm 9 GPIO_ACTIVE_LOW>;
+			gpios = <&tlmm 9 GPIO_ACTIVE_HIGH>;
 			linux,input-type = <1>;
 			debounce-interval = <60>;
 		};
@@ -281,6 +302,18 @@
 			gpios = <&tlmm 18 GPIO_ACTIVE_LOW>;
 			linux,input-type = <1>;
 			debounce-interval = <60>;
+		};
+	};
+
+	gpio-export {
+		compatible = "gpio-export";
+		pinctrl-0 = <&usb_pins>;
+		pinctrl-names = "default";
+
+		usb_power {
+			gpio-export,name = "usb_power";
+			gpio-export,output = <1>;
+			gpios = <&tlmm 0 GPIO_ACTIVE_HIGH>;
 		};
 	};
 };
