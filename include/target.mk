@@ -62,8 +62,6 @@ DEFAULT_PACKAGES.tweak:=\
 	luci-app-filetransfer \
 	luci-app-ramfree \
 	luci-app-ssr-plus \
-	luci-app-turboacc \
-	luci-app-upnp \
 	luci-lib-fs \
 	luci-lib-ipkg \
 	luci-theme-neobird

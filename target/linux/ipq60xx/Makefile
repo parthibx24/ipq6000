@@ -6,7 +6,7 @@ BOARDNAME:=Qualcomm Atheros IPQ60xx
 FEATURES:=squashfs fpu ramdisk nand
 MAINTAINER:=John Crispin <john@phrozen.org>
 CPU_TYPE:=cortex-a53
-SUBTARGETS:=generic
+SUBTARGETS:=generic ipq60xx_32
 
 KERNEL_PATCHVER:=4.4
 
