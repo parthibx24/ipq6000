@@ -9,8 +9,10 @@ CPU_TYPE:=cortex-a53
 SUBTARGETS:=generic ipq60xx_32
 
 KERNEL_PATCHVER:=4.4
+KERNEL_NAME_SUFFIX=-qsdk-11f09717303ecd83c3a64e9efe23f25921dc1016
 
 KERNELNAME:=Image dtbs
+
 
 include $(INCLUDE_DIR)/target.mk
 DEFAULT_PACKAGES += \

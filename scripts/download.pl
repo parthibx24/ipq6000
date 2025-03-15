@@ -263,6 +263,7 @@ foreach my $mirror (@ARGV) {
 		foreach my $dir (@extra) {
 			# push @mirrors, "https://mirrors.ustc.edu.cn/kernel.org/$dir";
 			# push @mirrors, "https://mirror.iscas.ac.cn/kernel.org/$dir";
+			push @mirrors, 'https://mirror2.openwrt.org/sources';
 			push @mirrors, "https://cdn.kernel.org/pub/$dir";
 			push @mirrors, "https://download.xs4all.nl/ftp.kernel.org/pub/$dir";
 			push @mirrors, "https://mirrors.mit.edu/kernel/$dir";
@@ -273,6 +274,7 @@ foreach my $mirror (@ARGV) {
 		}
 	} elsif ($mirror =~ /^\@GNOME\/(.+)$/) {
 		# push @mirrors, "https://mirrors.ustc.edu.cn/gnome/sources/$1";
+		push @mirrors, 'https://mirror2.openwrt.org/sources';
 		push @mirrors, "https://download.gnome.org/sources/$1";
 		push @mirrors, "https://mirror.csclub.uwaterloo.ca/gnome/sources/$1";
 		push @mirrors, "http://ftp.acc.umu.se/pub/GNOME/sources/$1";
@@ -294,7 +296,7 @@ push @mirrors, 'https://sources.immortalwrt.org';
 push @mirrors, 'https://sources.cdn.immortalwrt.org';
 push @mirrors, 'https://sources.cdn.openwrt.org';
 push @mirrors, 'https://sources.openwrt.org';
-push @mirrors, 'https://mirror2.openwrt.org/sources';
+
 
 if (-f "$target/$filename") {
 	$hash_cmd and do {

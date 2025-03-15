@@ -28,8 +28,7 @@
 		led-running = &led_blue;
 		led-upgrade = &led_white;
 		serial0 = &blsp1_uart3;
-		serial1 = &blsp1_uart4;
-		serial2 = &blsp1_uart5;
+
 
 		ethernet0 = "/soc/dp1";
 		ethernet1 = "/soc/dp2";

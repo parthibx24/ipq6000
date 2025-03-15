@@ -9,7 +9,7 @@ endif
 LINUX_VERSION-4.4 = .60
 LINUX_VERSION-4.14 = .267
 
-LINUX_KERNEL_HASH-4.4.60 = 10f619f7f9ab9f2776d0e34d37138b1ca14e9a026b91790dbdb1eb6c8d15edc6
+LINUX_KERNEL_HASH-4.4.60 = e7f2f47acf17497d6ffd713eda65c025b3df0bce09faa8c04712bf1b3cfc9fdb
 LINUX_KERNEL_HASH-4.14.267 = 8c343f885cfe25a51a8d40595afe5268ce09eaf8f531f9546ecf20831924188e
 
 remove_uri_prefix=$(subst git://,,$(subst http://,,$(subst https://,,$(1))))
