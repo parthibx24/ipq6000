@@ -88,7 +88,7 @@ define Device/redmi_ax5
   DEVICE_DTS := qcom-ipq6018-gl-ax1800
   SUPPORTED_DEVICES := glinet,ax1800
   DEVICE_DTS_CONFIG := config@cp03-c1
-  DEVICE_PACKAGES := -kmod-ath11k -kmod-ath11k-ahb -ath11k-wifi-gl-axt1800 -ath11k-firmware-ipq60xx -kmod-usb-dwc3-of-simple -kmod-usb-dwc3-qcom -kmod-usb3
+  DEVICE_PACKAGES := -package-hostapd-common -package-wpad-openssl -kmod-ath11k -kmod-ath11k-ahb -ath11k-wifi-gl-axt1800 -ath11k-firmware-ipq60xx -kmod-usb-dwc3-of-simple -kmod-usb-dwc3-qcom -kmod-usb3
   IMAGES := sysupgrade.tar nand-factory.ubi
   IMAGE/sysupgrade.tar := sysupgrade-tar
   IMAGE/nand-factory.ubi := append-ubi
