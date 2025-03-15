@@ -24,12 +24,11 @@
 	qcom,msm-id = <0x1A5 0x0>;
 
 	aliases {
-		ethernet0 = "/soc/dp1";
 		ethernet1 = "/soc/dp2";
 		ethernet2 = "/soc/dp3";
 
-		//led-boot = &led_run;
-		//led-failsafe = &led_run;
+		led-boot = &led_run;
+		led-failsafe = &led_run;
 		//led-running = &led_run;
 		//led-upgrade = &led_run;
 	};
@@ -130,14 +129,9 @@
 	};
 
 	button_pins: button_pins {
-		switch_button {
-			pins = "gpio9";
-			function = "gpio";
-			drive-strength = <8>;
-			bias-pull-up;
-		};
+
 		reset_button {
-			pins = "gpio18";
+			pins = "gpio19";
 			function = "gpio";
 			drive-strength = <8>;
 			bias-pull-up;
@@ -166,13 +160,13 @@
 
 	leds_pins: leds_pins {
 		white {
-			pins = "gpio35";
+			pins = "gpio29";
 			function = "gpio";
 			drive-strength = <8>;
 			bias-pull-down;
 		};
 		blue {
-			pins = "gpio37";
+			pins = "gpio31";
 			function = "gpio";
 			drive-strength = <8>;
 			bias-pull-down;
@@ -230,18 +224,6 @@
 		};
 	};
 
-	dp1 {
-		device_type = "network";
-		compatible = "qcom,nss-dp";
-		qcom,id = <1>;
-		reg = <0x3a001000 0x200>;
-		qcom,mactype = <0>;
-		local-mac-address = [000000000000];
-		qcom,link-poll = <1>;
-		qcom,phy-mdio-addr = <0>;
-		phy-mode = "sgmii";
-	};
-
 	dp2 {
 		device_type = "network";
 		compatible = "qcom,nss-dp";
@@ -273,13 +255,13 @@
 
 		led_run: white {
 			label = "white_led";
-			gpios = <&tlmm 35 GPIO_ACTIVE_HIGH>;
+			gpios = <&tlmm 29 GPIO_ACTIVE_HIGH>;
 			default-state = "off";
 		};
 
 		blue {
 			label = "blue_led";
-			gpios = <&tlmm 37 GPIO_ACTIVE_HIGH>;
+			gpios = <&tlmm 29 GPIO_ACTIVE_HIGH>;
 			default-state = "on";
 		};
 	};
@@ -289,17 +271,10 @@
 		pinctrl-0 = <&button_pins>;
 		pinctrl-names = "default";
 
-		switch {
-			label = "switch";
-			linux,code = <KEY_WPS_BUTTON>;
-			gpios = <&tlmm 9 GPIO_ACTIVE_HIGH>;
-			linux,input-type = <1>;
-			debounce-interval = <60>;
-		};
 		reset {
 			label = "reset";
 			linux,code = <KEY_RESTART>;
-			gpios = <&tlmm 18 GPIO_ACTIVE_LOW>;
+			gpios = <&tlmm 19 GPIO_ACTIVE_LOW>;
 			linux,input-type = <1>;
 			debounce-interval = <60>;
 		};
@@ -339,13 +314,13 @@
 };
 
 &qusb_phy_0 {
-	status = "ok";
+	status = "disabled";
 };
 
 &usb3 {
 	pinctrl-0 = <&usb_pins>;
 	pinctrl-names = "default";
-	status = "ok";
+	status = "disabled";
 };
 
 &nss_crypto {

@@ -4,7 +4,7 @@ ARCH:=arm
 BOARD:=ipq807x
 BOARDNAME:=Qualcomm Atheros AX
 SUBTARGETS:=ipq807x ipq60xx ipq50xx
-FEATURES:=squashfs ramdisk nand pcie usb
+FEATURES:=squashfs ramdisk nand
 KERNELNAME:=Image dtbs
 CPU_TYPE:=cortex-a7
 
@@ -15,7 +15,7 @@ include $(INCLUDE_DIR)/target.mk
 DEFAULT_PACKAGES += kmod-qca-nss-dp kmod-qca-ssdk swconfig \
 	kmod-qca-nss-drv \
 	kmod-usb-phy-ipq807x kmod-usb-dwc3-of-simple \
-	kmod-ath11k-ahb kmod-qrtr_mproc wpad \
+	kmod-qrtr_mproc wpad \
 	kmod-gpio-button-hotplug \
 	qca-thermald-10.4 qca-ssdk-shell kmod-qca-nss-drv-bridge-mgr \
 	uboot-envtools

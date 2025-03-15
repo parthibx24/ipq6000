@@ -23,7 +23,6 @@
 
 	aliases {
 		serial0 = &blsp1_uart3; //system uart = ttyMSM0
-		serial1 = &blsp1_uart4; //tl8251      = ttyMSM1
 		ethernet3 = "/soc/dp4";
 		ethernet4 = "/soc/dp5";
 	};
@@ -116,5 +115,5 @@
 &blsp1_uart4 {
 	pinctrl-0 = <&uart_tl8251_pins>;
 	pinctrl-names = "default";
-	status = "ok";
+	status = "disabled";
 };
